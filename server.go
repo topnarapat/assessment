@@ -21,6 +21,7 @@ func main() {
 
 	e := echo.New()
 	e.GET("/health", healthHandler)
+	e.POST("/expenses", expense.CreateExpenseHandler)
 
 	fmt.Println("start at port:", os.Getenv("PORT"))
 	e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
