@@ -40,6 +40,7 @@ func main() {
 	e.POST("/expenses", expense.CreateExpenseHandler)
 	e.GET("/expenses/:id", expense.GetExpenseHandler)
 	e.PUT("/expenses/:id", expense.UpdateExpenseHandler)
+	e.GET("/expenses", expense.GetExpensesHandler)
 
 	fmt.Println("start at port:", os.Getenv("PORT"))
 	e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
