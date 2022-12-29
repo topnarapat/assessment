@@ -9,7 +9,7 @@ services:
       context: .
       dockerfile: ./Dockerfile.test
     volumes:
-      - /e/Code/klix/assessment:/go/src/target
+      - $PWD:/go/src/target
     depends_on:
       - db
     networks:
