@@ -8,7 +8,7 @@ import (
 	"github.com/lib/pq"
 )
 
-func UpdateExpenseHandler(c echo.Context) error {
+func (h ExpenseHandler) UpdateExpenseHandler(c echo.Context) error {
 	rowID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, Err{Message: err.Error()})
@@ -21,11 +21,7 @@ func UpdateExpenseHandler(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, Err{Message: err.Error()})
 	}
 
-	stmt, err := db.Prepare(`
-	UPDATE expenses
-	SET title=$2, amount=$3, note=$4, tags=$5
-	WHERE id=$1
-	`)
+	stmt, err := h.db.Prepare(`UPDATE expenses SET title=$2, amount=$3, note=$4, tags=$5 WHERE id=$1`)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, Err{Message: err.Error()})
 	}

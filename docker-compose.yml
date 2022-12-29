@@ -1,0 +1,32 @@
+version: '3.2'
+
+networks:
+  expense-network:
+
+services:
+  expenses:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "2565:2565"
+    depends_on:
+        - db
+    environment:
+      DATABASE_URL: postgres://root:root@db/expenses?sslmode=disable
+      PORT: 2565
+    networks:
+      - expense-network
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: expenses
+    restart: on-failure
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/
+    networks:
+      - expense-network
